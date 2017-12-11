@@ -1,0 +1,27 @@
+body{
+    font-family: segoe ui light;
+    background-color: white;
+}
+
+.container{
+    margin: 0 auto;
+    width: 200;
+    height: 200;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+img{
+    width: 120px;
+    height: 120px;
+}
