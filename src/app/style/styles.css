@@ -1,36 +1,111 @@
 body{
-    font-family: segoe ui light;
+    font-family: Segoe UI Light;
+    background-image: url("https://www.xmple.com/wallpaper/blue-green-linear-gradient-1920x1080-c2-40e0d0-3cb371-a-45-f-14.svg");
+}
+
+list{
+    font-family: Segoe UI Light;
+}
+
+input{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: solid;
+    border-color: transparent;
+    border-width: 1px;
+    height: 50px;
+    width: 400px;
+    font-size: 20px;
+    font-family: Segoe UI Light;
+    text-align: center;
+}
+
+.loginbutton{
+    height: 50px;
+    width: 400px;
+    font-size: 20px;
+    font-family: Segoe UI Light;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #808080;
+}
+
+label{
+    text-align: center;
+    font-size: 20px;
+}
+
+html{
+    font-family: Segoe UI Light;
+}
+
+td{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    font-family: Segoe UI Light;
     background-color: white;
+}
+
+tr{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    font-family: Segoe UI Light;
+    background-color: white;
+}
+
+th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    font-family: Segoe UI Light;
+    background-color: rgb(196, 248, 227);
+    font-weight: 600;
+}
+
+button{
+    font-family: Segoe UI Light;
+    border: solid;
+    border-color: transparent;
+    border-width: 1px;
+    margin-top: 10px;
 }
 
 .container{
     margin: 0 auto;
     width: 200;
     height: 200;
+    font-family: Segoe UI Light;
+    display: block;
 }
 
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+    font-family: Segoe UI Light;
 }
 
 img{
     width: 120px;
     height: 120px;
+    font-family: Segoe UI Light;
 }
 
 .detailimage{
     align-items: left;
+    font-family: Segoe UI Light;
 }
 
 .detailtable{
     align-items: right;
     width: auto;
+    font-family: Segoe UI Light;
+}
+
+.container{
+    background-color: transparent;
+    width: 250px;
+    height: 250px;
+    padding: 30px;
 }
