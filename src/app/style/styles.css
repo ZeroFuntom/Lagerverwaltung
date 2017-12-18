@@ -25,3 +25,12 @@ img{
     width: 120px;
     height: 120px;
 }
+
+.detailimage{
+    align-items: left;
+}
+
+.detailtable{
+    align-items: right;
+    width: auto;
+}
