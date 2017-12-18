@@ -1,0 +1,6 @@
+INSERT INTO tbl_produkte (titel, beschreibung, menge, preis, fk_kategorie) VALUES
+('Socks', 'Warm socks for cold seasons', 20, 49, 1),
+('Underpants', 'Beautiful underpants for men and women', 20, 89, 2),
+('Hat', 'A hat is simply a hat', 20, 785, 3),
+('Sweater', 'Make christmas season cozy with this sweater', 20, 1800, 4),
+('Shorts', 'Shorts, when man is hot', 20, 1390, 5);

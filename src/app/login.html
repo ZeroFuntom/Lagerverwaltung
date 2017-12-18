@@ -3,9 +3,15 @@
     <head>
         <title>Warehouse Management</title>
         <link rel="stylesheet" href="style/styles.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+        <script type="text/javascript">
+          $(document).ready(function(){
+
+          });
+        </script>
     </head>
     <body>
-        <form action="/checklogin.php">
+        <form method="post" action="checklogin.php">
             <div class="container">
                 <label><b>Username</b></label><br>
                 <input type="text" placeholder="Username" name="username" required><br>
@@ -15,6 +21,6 @@
 
                 <button type="submit">Login</button>
             </div>
-          </form>
+        </form>
     </body>
 </html>

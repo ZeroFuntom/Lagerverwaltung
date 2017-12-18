@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `injection`
 --
-CREATE DATABASE IF NOT EXISTS `injection` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `injection`;
+CREATE DATABASE IF NOT EXISTS `m151_lagerverwaltung` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `m151_lagerverwaltung`;
 
 -- --------------------------------------------------------
 
