@@ -24,15 +24,20 @@
               $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getpurchases.php", function(arr){
 
                 for(var i=0; i<arr.length; i++){
-                    $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td><td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td><td>"+arr[i].fk_erfasser+"</td><td><input type='number' name='anzahl' value='"+arr[i].anzahl+"'></td><td><input type='text' name='kommentar' value='"+arr[i].kommentar+"'></td><td><input type='button' id='sv"+arr[i].bestellnr+"' class='save' value='Save'></td></tr>");
+                    $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td><td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td><td>"+arr[i].fk_erfasser+"</td><td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' value='"+arr[i].anzahl+"'></td><td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' value='"+arr[i].kommentar+"'></td><td><input type='button' id='sv"+arr[i].bestellnr+"' class='save' value='Save'></td></tr>");
                 }
 
               });
           });
 
           $(document).on('click', '.save', function(){
-            var id = $(this).attr('id');
-            
+            var id = $(this).attr('id').split('');
+            var cmt = $('#cmt'+id[2]).val();
+            var anz = $('#anz'+id[2]).val();
+            $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[2], com:cmt, an:anz}, function(ret){
+              alert(ret);
+            });
+
           });
         </script>
     </head>
