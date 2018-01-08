@@ -21,16 +21,16 @@
                   }
               });
 
-              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getpurchases.php", function(arr){
+              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproducts.php", function(arr){
 
                 for(var i=0; i<arr.length; i++){
-                    $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td><td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td><td>"+arr[i].fk_erfasser+"</td><td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' value='"+arr[i].anzahl+"'></td><td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' value='"+arr[i].kommentar+"'></td><td><input type='button' id='sv"+arr[i].bestellnr+"' class='save' value='Save'></td></tr>");
+                    $("#products").append("<tr><td>"+arr[i].id_produkt+"</td><td><img src='"+arr[i].link+"'></td><td>"+arr[i].titel+"</td><td>"+arr[i].beschreibung+"</td><td>"+arr[i].menge+"</td><td>CHF "+arr[i].preis+"</td><td><input id='' type='button' value='Auswählen'</td>");
                 }
 
               });
           });
 
-          $(document).on('click', '.save', function(){
+          /*$(document).on('click', '.save', function(){
             var id = $(this).attr('id').split('');
             var cmt = $('#cmt'+id[2]).val();
             var anz = $('#anz'+id[2]).val();
@@ -38,27 +38,29 @@
               alert(ret);
             });
 
-          });
+          });*/
         </script>
     </head>
     <body>
 
         <table id="purchases">
           <tr>
-              <th>Bestellnr</th>
-              <th>Datum</th>
-              <th>Produkt</th>
-              <th>Erfasser</th>
-              <th>Anahl</th>
-              <th>Kommentar</th>
-              <th></th>
-
-
+              <th>Produkt</th><td><select></select></td>
+          </tr>
+          <tr>
+              <th>Anzahl</th><td><input type="text"></td>
           </tr>
         </table>
 
-        <a href="addpurchase.html">Neue Bestellung</a>
-        <a href="logout.php">Logout</a>
-
+        <table id="products">
+          <tr>
+            <th>ID</th>
+            <th>Bild</th>
+            <th>Titel</th>
+            <th>Beschreibung</th>
+            <th>Menge</th>
+            <th>Preis</th>
+          </tr>
+        </table>
 </body>
 </html>
