@@ -1,6 +1,7 @@
 body{
     font-family: Segoe UI Light;
     background-image: url("https://www.xmple.com/wallpaper/blue-green-linear-gradient-1920x1080-c2-40e0d0-3cb371-a-45-f-14.svg");
+    height: 100px;
 }
 
 list{
@@ -26,7 +27,6 @@ input{
     font-family: Segoe UI Light;
     text-align: center;
     background-color: rgba(255, 255, 255, 0.5);
-    color: #808080;
 }
 
 label{
@@ -36,6 +36,7 @@ label{
 
 html{
     font-family: Segoe UI Light;
+    height: 100px;
 }
 
 td{
@@ -61,6 +62,7 @@ th{
     font-family: Segoe UI Light;
     background-color: rgb(196, 248, 227);
     font-weight: 600;
+    /* margin-bottom: 20px; */
 }
 
 button{
@@ -108,4 +110,26 @@ img{
     width: 250px;
     height: 250px;
     padding: 30px;
+}
+
+select{
+    height: 54px;
+    width: 402px;
+    text-align: center;
+    border: 1px solid #dddddd;
+}
+
+/*
+a{
+    text-decoration: none;
+    padding: 5px;
+    background-color: rgb(196, 248, 227);
+    border: 1px solid #dddddd;
+    color: black;
+}
+*/
+
+a{
+    /* text-decoration: none; */
+    color: black;
 }
