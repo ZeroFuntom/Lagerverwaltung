@@ -10,7 +10,7 @@ list{
 
 input{
     background-color: rgba(196, 248, 227, 0.25);
-    border: 1px solid #dddddd;
+    border: 1px solid transparent;
     border-width: 1px;
     height: 50px;
     width: 400px;
@@ -120,15 +120,14 @@ select{
     background-color: rgba(196, 248, 227, 0.25);
 }
 
-/*
-a{
-    text-decoration: none;
+.smallbutton{
+    margin-top: 5px;
     padding: 5px;
+    text-decoration: none;
     background-color: rgb(196, 248, 227);
     border: 1px solid #dddddd;
     color: black;
 }
-*/
 
 a{
     /* text-decoration: none; */
