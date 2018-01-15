@@ -9,6 +9,7 @@
             alert("Saved: "+id);
             //window.location.href("updatepurchase.php?id="+id);
           }*/
+
           $(document).ready(function(){
 
               /*$('#sv1').click(function(){
@@ -83,32 +84,63 @@
 
           });
 
+
           $(document).on('click', '.save', function(){
             var id = $(this).attr('id').split('-');
             var cmt = $('#cmt'+id[1]).val();
             var anz = $('#anz'+id[1]).val();
             var status = $('#status'+id[1]).val();
+            var st1 = false;
+            var st2 = false;
             var menge = 0;
+            var neuemenge = 0;
+            var currentstatus = 0;
+
             //alert(id[2]);
 
-            if(status==1){
-              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getlager.php", {idb:id[2]}, function(lgr){
-                menge = lgr[0].menge;
-                alert(menge);
+            $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getlager.php", {idb:id[2]}, function(lgr){
+              menge = lgr[0].menge;
+              neuemenge = menge;
+              if(status>1){
+                st1 = true;
+              }
+              //alert(menge);
+              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getcurrentstatus.php", {ids:id[1]}, function(crs){
+
+
+                alert(crs[0].fk_status);
+                if(crs[0].fk_status == 1){
+                  st2 = true;
+                }
+
+                if(st1 && st2){
+                  neuemenge = menge-anz;
+                  alert("SUBTRAKTION")
+                }
+                //alert(neuemenge);
+
+                if(neuemenge >= 0){
+                  $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[1], com:cmt, an:anz, sts:status}, function(ret){
+
+                    alert(ret);
+
+                    if($('#status'+id[1]).val()>1){
+
+
+                      $("#status"+id[1]).prop("disabled", true);
+                    }
+                  });
+                }else{
+                  alert("Zu wenig Artikel im Lager!");
+                }
+
+
               });
-            }
+            });
 
             //alert(menge);
 
-            $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[1], com:cmt, an:anz, sts:status}, function(ret){
-              alert(ret);
 
-              if($('#status'+id[1]).val()>1){
-
-
-                $("#status"+id[1]).prop("disabled", true);
-              }
-            });
 
           });
         </script>
