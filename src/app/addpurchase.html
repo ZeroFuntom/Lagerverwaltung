@@ -24,34 +24,36 @@
               $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproducts.php", function(arr){
 
                 for(var i=0; i<arr.length; i++){
-                    $("#products").append("<tr><td>"+arr[i].id_produkt+"</td><td><img src='"+arr[i].link+"'></td><td>"+arr[i].titel+"</td><td>"+arr[i].beschreibung+"</td><td>"+arr[i].menge+"</td><td>CHF "+arr[i].preis+"</td><td><input id='' type='button' value='Auswählen'</td>");
+                    $("#products").append("<tr><td>"+arr[i].id_produkt+"</td><td><img src='"+arr[i].link+"'></td><td>"+arr[i].titel+"</td><td>"+arr[i].beschreibung+"</td><td>"+arr[i].menge+"</td><td>CHF "+arr[i].preis+"</td><td><input id='add-"+arr[i].id_produkt+"' class='adder' type='button' value='Auswählen'</td>");
                 }
 
               });
           });
 
-          /*$(document).on('click', '.save', function(){
-            var id = $(this).attr('id').split('');
-            var cmt = $('#cmt'+id[2]).val();
-            var anz = $('#anz'+id[2]).val();
+          $(document).on('click', '.adder', function(){
+            var id = $(this).attr('id').split("-");
+            $("#selectid").val(id[1]);
+            $("#anzahl").val(1);
+
             $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[2], com:cmt, an:anz}, function(ret){
               alert(ret);
             });
 
-          });*/
+          });
         </script>
     </head>
     <body>
-
-        <table id="purchases">
-          <tr>
-              <th>Produkt</th><td><select></select></td>
-          </tr>
-          <tr>
-              <th>Anzahl</th><td><input type="text"></td>
-          </tr>
-        </table>
-
+        <form method="post" action="addpurchasebl.php">
+          <table id="purchases">
+            <tr>
+                <th>Produkt</th><td><input id="selectid" name="id_produkt" type="number" readonly></td>
+            </tr>
+            <tr>
+                <th>Anzahl</th><td><input id="anzahl" name="anzahl" type="number"></td>
+            </tr>
+          </table>
+          <input type="submit" value="Erfassen">
+        </form>
         <table id="products">
           <tr>
             <th>ID</th>

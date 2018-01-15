@@ -21,21 +21,93 @@
                   }
               });
 
+
               $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getpurchases.php", function(arr){
+                var bestnr = [];
+                var status = [];
 
                 for(var i=0; i<arr.length; i++){
-                    $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td><td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td><td>"+arr[i].fk_erfasser+"</td><td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' value='"+arr[i].anzahl+"'></td><td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' value='"+arr[i].kommentar+"'></td><td><input type='button' id='sv"+arr[i].bestellnr+"' class='save' value='Save'></td></tr>");
+                    $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td>"+
+                    "<td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td>"+
+                    "<td>"+arr[i].fk_erfasser+"</td>"+
+                    "<td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' value='"+arr[i].anzahl+"'></td>"+
+                    "<td><select id='status"+arr[i].bestellnr+"' >"+
+                    "</select></td>"+
+                    "<td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' value='"+arr[i].kommentar+"'></td>"+
+                    "<td><input type='button' id='sv-"+arr[i].bestellnr+"-"+arr[i].fk_produkt+"' class='save' value='Save'></td>"+
+                    "</tr>");
+
+                    bestnr.push(arr[i].bestellnr);
+                    status.push(arr[i].fk_status);
+
+
+
+
                 }
 
+                $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getstatus.php", function(sts){
+
+                  //alert(bestnr.length);
+
+                  for(var i=0; i<bestnr.length; i++){
+                    var bestid = bestnr[i];
+                    var fk_status = status[i];
+
+                    for(var j=0; j<sts.length; j++){
+                      var selected = "";
+                      var read = "";
+                      if(sts[j].id_status == fk_status){
+                        selected = "selected";
+                      }
+
+
+
+                      //alert(bestnr);
+                      //alert(fk_status);
+
+                      $("#status"+bestid).append("<option value='"+sts[j].id_status+"' "+selected+" >"+sts[j].status+"</option>");
+
+                      if(fk_status > 1){
+                        //alert("READONLY");
+                        $("#status"+bestid).prop("disabled", true);
+                      }
+                    }
+
+                  }
+                });
+
               });
+
+
+
+
           });
 
           $(document).on('click', '.save', function(){
-            var id = $(this).attr('id').split('');
-            var cmt = $('#cmt'+id[2]).val();
-            var anz = $('#anz'+id[2]).val();
-            $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[2], com:cmt, an:anz}, function(ret){
+            var id = $(this).attr('id').split('-');
+            var cmt = $('#cmt'+id[1]).val();
+            var anz = $('#anz'+id[1]).val();
+            var status = $('#status'+id[1]).val();
+            var menge = 0;
+            //alert(id[2]);
+
+            if(status==1){
+              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getlager.php", {idb:id[2]}, function(lgr){
+                menge = lgr[0].menge;
+                alert(menge);
+              });
+            }
+
+            //alert(menge);
+
+            $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[1], com:cmt, an:anz, sts:status}, function(ret){
               alert(ret);
+
+              if($('#status'+id[1]).val()>1){
+
+
+                $("#status"+id[1]).prop("disabled", true);
+              }
             });
 
           });
@@ -49,7 +121,8 @@
               <th>Datum</th>
               <th>Produkt</th>
               <th>Erfasser</th>
-              <th>Anahl</th>
+              <th>Anzahl</th>
+              <th>Status</th>
               <th>Kommentar</th>
               <th></th>
 
