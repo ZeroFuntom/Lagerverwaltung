@@ -9,6 +9,8 @@
             alert("Saved: "+id);
             //window.location.href("updatepurchase.php?id="+id);
           }*/
+          var price = 0;
+
           $(document).ready(function(){
 
               /*$('#sv1').click(function(){
@@ -28,6 +30,17 @@
                 }
 
               });
+
+              $("#anzahl").on("change", function(){
+                var id = $("#selectid").val();
+                $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproductbyid.php", {idpr:id}, function(ret){
+                  price = ret[0].preis * $("#anzahl").val();
+                  //alert(price);
+                  $("#selectpname").val(ret[0].titel+" (CHF "+price+")");
+                });
+
+              });
+
           });
 
           $(document).on('click', '.adder', function(){
@@ -35,8 +48,12 @@
             $("#selectid").val(id[1]);
             $("#anzahl").val(1);
 
-            $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[2], com:cmt, an:anz}, function(ret){
-              alert(ret);
+
+
+            $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproductbyid.php", {idpr:id[1]}, function(ret){
+              price = ret[0].preis * $("#anzahl").val();
+              //alert(price);
+              $("#selectpname").val(ret[0].titel+" (CHF "+price+")");
             });
 
           });
@@ -46,7 +63,7 @@
         <form method="post" action="addpurchasebl.php">
           <table id="purchases">
             <tr>
-                <th>Produkt</th><td><input id="selectid" name="id_produkt" type="number" readonly></td>
+                <th>Produkt</th><td><input id="selectid" name="id_produkt" type="number" readonly><input id="selectpname" type="text" readonly></td>
             </tr>
             <tr>
                 <th>Anzahl</th><td><input id="anzahl" name="anzahl" type="number"></td>
