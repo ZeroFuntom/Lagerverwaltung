@@ -70,6 +70,7 @@
 
                       if(fk_status > 1){
                         //alert("READONLY");
+                        $("#anz"+bestid).prop("disabled", true);
                         $("#status"+bestid).prop("disabled", true);
                       }
                     }
@@ -129,6 +130,10 @@
 
                       $("#status"+id[1]).prop("disabled", true);
                     }
+                  });
+
+                  $.get("http://localhost/m151/Lagerverwaltung/src/app/updatequantity.php", {nm:neuemenge, idq:id[2]}, function(qty){
+                    alert(qty);
                   });
                 }else{
                   alert("Zu wenig Artikel im Lager!");
