@@ -11,19 +11,25 @@
           }*/
           var price = 0;
 
+          var url = window.location.href;
+          var urlarr = url.split("/");
+          var urlrelative = urlarr[0]+"//"+urlarr[2]+"/";
+
+          for(var i=0; i<urlarr.length; i++){
+            if(i>2 && i<(urlarr.length-1)){
+              urlrelative += urlarr[i]+"/";
+            }
+          }
+
           $(document).ready(function(){
 
-              /*$('#sv1').click(function(){
-                alert("saved");
-              });*/
-
-              $.get("http://localhost/m151/Lagerverwaltung/src/app/check_session.php", function(bool){
+              $.get(urlrelative+"check_session.php", function(bool){
                   if(bool == "false"){
-                    window.location.replace("http://localhost/m151/Lagerverwaltung/src/app/login.html");
+                    window.location.replace(urlrelative+"login.html");
                   }
               });
 
-              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproducts.php", function(arr){
+              $.getJSON(urlrelative+"getproducts.php", function(arr){
 
                 for(var i=0; i<arr.length; i++){
                     $("#products").append("<tr><td>"+arr[i].id_produkt+"</td><td><img src='"+arr[i].link+"'></td><td>"+arr[i].titel+"</td><td>"+arr[i].beschreibung+"</td><td>"+arr[i].menge+"</td><td>CHF "+arr[i].preis+"</td><td><input id='add-"+arr[i].id_produkt+"' class='adder' type='button' value='Auswählen'</td>");
@@ -33,7 +39,7 @@
 
               $("#anzahl").on("change", function(){
                 var id = $("#selectid").val();
-                $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproductbyid.php", {idpr:id}, function(ret){
+                $.getJSON(urlrelative+"getproductbyid.php", {idpr:id}, function(ret){
                   price = ret[0].preis * $("#anzahl").val();
                   //alert(price);
                   $("#selectpname").val(ret[0].titel+" (CHF "+price+")");
@@ -49,8 +55,7 @@
             $("#anzahl").val(1);
 
 
-
-            $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getproductbyid.php", {idpr:id[1]}, function(ret){
+            $.getJSON(urlrelative+"getproductbyid.php", {idpr:id[1]}, function(ret){
               price = ret[0].preis * $("#anzahl").val();
               //alert(price);
               $("#selectpname").val(ret[0].titel+" (CHF "+price+")");
@@ -66,7 +71,7 @@
                 <th>Produkt</th><td><input id="selectid" name="id_produkt" type="number" readonly><input id="selectpname" type="text" readonly></td>
             </tr>
             <tr>
-                <th>Anzahl</th><td><input id="anzahl" name="anzahl" type="number"></td>
+                <th>Anzahl</th><td><input id="anzahl" name="anzahl" min="1" type="number"></td>
             </tr>
           </table>
           <input type="submit" value="Erfassen">

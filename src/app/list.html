@@ -5,50 +5,44 @@
         <link rel="stylesheet" href="style/styles.css">
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
         <script type="text/javascript">
-          /*function save(id){
-            alert("Saved: "+id);
-            //window.location.href("updatepurchase.php?id="+id);
-          }*/
+
+          var url = window.location.href;
+          var urlarr = url.split("/");
+          var urlrelative = urlarr[0]+"//"+urlarr[2]+"/";
+
+          for(var i=0; i<urlarr.length; i++){
+            if(i>2 && i<(urlarr.length-1)){
+              urlrelative += urlarr[i]+"/";
+            }
+          }
 
           $(document).ready(function(){
 
-              /*$('#sv1').click(function(){
-                alert("saved");
-              });*/
-
-              $.get("http://localhost/m151/Lagerverwaltung/src/app/check_session.php", function(bool){
+              $.get(urlrelative+"check_session.php", function(bool){
                   if(bool == "false"){
-                    window.location.replace("http://localhost/m151/Lagerverwaltung/src/app/login.html");
+                    window.location.replace(urlrelative+"login.html");
                   }
               });
 
-
-              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getpurchases.php", function(arr){
+              $.getJSON(urlrelative+"getpurchases.php", function(arr){
                 var bestnr = [];
                 var status = [];
 
                 for(var i=0; i<arr.length; i++){
                     $("#purchases").append("<tr><td>"+arr[i].bestellnr+"</td>"+
                     "<td>"+arr[i].datum+"</td><td>"+arr[i].titel+"</td>"+
-                    "<td>"+arr[i].fk_erfasser+"</td>"+
-                    "<td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' value='"+arr[i].anzahl+"'></td>"+
+                    "<td><input type='number' id='anz"+arr[i].bestellnr+"' name='anzahl' min='1' value='"+arr[i].anzahl+"'></td>"+
                     "<td><select id='status"+arr[i].bestellnr+"' >"+
                     "</select></td>"+
-                    "<td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' value='"+arr[i].kommentar+"'></td>"+
+                    "<td><input type='text' id='cmt"+arr[i].bestellnr+"' name='kommentar' maxlength='255' value='"+arr[i].kommentar+"'></td>"+
                     "<td><input type='button' id='sv-"+arr[i].bestellnr+"-"+arr[i].fk_produkt+"' class='save' value='Save'></td>"+
                     "</tr>");
 
                     bestnr.push(arr[i].bestellnr);
                     status.push(arr[i].fk_status);
-
-
-
-
                 }
 
-                $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getstatus.php", function(sts){
-
-                  //alert(bestnr.length);
+                $.getJSON(urlrelative+"getstatus.php", function(sts){
 
                   for(var i=0; i<bestnr.length; i++){
                     var bestid = bestnr[i];
@@ -61,15 +55,9 @@
                         selected = "selected";
                       }
 
-
-
-                      //alert(bestnr);
-                      //alert(fk_status);
-
                       $("#status"+bestid).append("<option value='"+sts[j].id_status+"' "+selected+" >"+sts[j].status+"</option>");
 
                       if(fk_status > 1){
-                        //alert("READONLY");
                         $("#anz"+bestid).prop("disabled", true);
                         $("#status"+bestid).prop("disabled", true);
                       }
@@ -77,12 +65,7 @@
 
                   }
                 });
-
               });
-
-
-
-
           });
 
 
@@ -99,54 +82,42 @@
 
             //alert(id[2]);
 
-            $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getlager.php", {idb:id[2]}, function(lgr){
+            $.getJSON(urlrelative+"getlager.php", {idb:id[2]}, function(lgr){
               menge = lgr[0].menge;
               neuemenge = menge;
               if(status>1){
                 st1 = true;
               }
-              //alert(menge);
-              $.getJSON("http://localhost/m151/Lagerverwaltung/src/app/getcurrentstatus.php", {ids:id[1]}, function(crs){
 
+              $.getJSON(urlrelative+"getcurrentstatus.php", {ids:id[1]}, function(crs){
 
-                alert(crs[0].fk_status);
                 if(crs[0].fk_status == 1){
                   st2 = true;
                 }
 
                 if(st1 && st2){
                   neuemenge = menge-anz;
-                  alert("SUBTRAKTION")
                 }
-                //alert(neuemenge);
 
                 if(neuemenge >= 0){
-                  $.get("http://localhost/m151/Lagerverwaltung/src/app/updatepurchase.php", {bestellnr:id[1], com:cmt, an:anz, sts:status}, function(ret){
+                  $.get(urlrelative+"updatepurchase.php", {bestellnr:id[1], com:cmt, an:anz, sts:status}, function(ret){
 
                     alert(ret);
 
                     if($('#status'+id[1]).val()>1){
-
-
+                      $("#anz"+id[1]).prop("disabled", true);
                       $("#status"+id[1]).prop("disabled", true);
                     }
                   });
 
-                  $.get("http://localhost/m151/Lagerverwaltung/src/app/updatequantity.php", {nm:neuemenge, idq:id[2]}, function(qty){
+                  $.get(urlrelative+"updatequantity.php", {nm:neuemenge, idq:id[2]}, function(qty){
                     alert(qty);
                   });
                 }else{
                   alert("Zu wenig Artikel im Lager!");
                 }
-
-
               });
             });
-
-            //alert(menge);
-
-
-
           });
         </script>
     </head>
@@ -157,12 +128,9 @@
               <th>Bestellnummer</th>
               <th>Datum</th>
               <th>Produkt</th>
-              <th>Erfasser</th>
               <th>Anzahl</th>
               <th>Status</th>
               <th>Kommentar</th>
-
-
           </tr>
         </table>
 
