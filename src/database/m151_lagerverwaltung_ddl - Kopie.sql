@@ -19,8 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `m151_lagerverwaltung`
 --
-CREATE DATABASE IF NOT EXISTS `m151_lagerverwaltung` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `m151_lagerverwaltung`;
+CREATE DATABASE IF NOT EXISTS `m151_lagerverwaltung_t` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `m151_lagerverwaltung_t`;
 
 
 
