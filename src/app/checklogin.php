@@ -18,6 +18,6 @@
   }else{
     header('Location: login.html');
   }
-  //echo "user: ".  $user['id_user'];
+  //echo "user: ".  $user['id_user'];z
 
 ?>
